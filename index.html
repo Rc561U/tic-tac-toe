@@ -1,43 +1,197 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>	
-	<meta charset ="UTF-8">
-	<title>Tic-Tac-Toe game vs. Computer</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--==================== UNICONS ====================-->
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
 	
-	<style>	
-		.wrap{
-			line-height: 0px;
-		}
 	
-		.cell{
-			border: 1px solid black;
-			width: 100px;
-			height: 100px;
-			display: table-cell;
-			background-color: tan;
-			font: bold 60px comic sans ms;
-			text-align: center;
-			color: green;
-		}
-	</style>
-	
-</head>
-	
-<body>
-<div class="wrap">
-	<div class="cell" data-num="0"></div>
-	<div class="cell" data-num="1"></div>
-	<div class="cell" data-num="2"></div>
-	<br>
-	<div class="cell" data-num="3"></div>
-	<div class="cell" data-num="4"></div>
-	<div class="cell" data-num="5"></div>
-	<br>
-	<div class="cell" data-num="6"></div>
-	<div class="cell" data-num="7"></div>
-	<div class="cell" data-num="8"></div>
-</div>
+	<link rel="stylesheet" href="css/style.css">
 
-<script src="main.js"></script>
+	<title>New site</title>
+</head>
+<body>
+	
+	<!-- top nav -->
+	<div class="top-nav navbar-expand-sm p-2">
+		<div class="container">
+			<div class="row d-sm-flex lign-items-center  justify-content-between">
+				<div class="col-auto text-light justify-content-lg-between">
+					<p>
+						<i class="uil uil-phone-alt contact__icon"></i>
+						<span>+375447861009</span>
+					</p>
+					<p>
+						<i class="uil uil-envelope contact__icon"></i>
+						<span>aramancou@gmail.com</span>
+					</p>
+				</div>
+				<div class="col-auto">
+					<div class="social-links">
+						 <a href="https://join.skype.com/invite/KDndma5VgKOA" target="_blank" class="footer__social">
+	               <i class="uil uil-skype"></i>
+	           </a>
+	           <a href="https://www.linkedin.com/in/ramancou/" target="_blank" class="footer__social">
+	               <i class="uil uil-linkedin"></i>
+	           </a>
+	           <a href="https://t.me/Numbernein" target="_blank" class="footer__social">
+	               <i class="uil uil-telegram"></i>
+	           </a>
+	           <a href="https://github.com/Rc561U" target="_blank" class="footer__social">
+	               <i class="uil uil-github"></i>
+	           </a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- botton nav -->
+
+	<nav class="navbar navbar-expand-md navbar-light  sticky-top">
+	    <div class="container">
+	        <a class="navbar-brand text-light" href="#">Tic Tac Toe<span class="dot">.</span></a>
+	        
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" >Choice username</button>
+
+      	<button type="button" id="restartGame" class="btn btn-light ms-3">Restart</button>
+		  <div class="collapse navbar-collapse " id="navbarNav">
+		    <ul class="navbar-nav ms-auto ">
+		      <li class="nav-item ">
+		        <a class="nav-link text-light ms-4" href="#">Code </a>
+		      </li>
+		      
+		      
+		      <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		          My projects
+		        </a>
+		        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+		          <li><a class="dropdown-item" href="#">Portfolio website</a></li>
+		          <li><a class="dropdown-item" href="#">It-Academy final project</a></li>
+		          <li><hr class="dropdown-divider"></li>
+		          <li><a class="dropdown-item" href="#">CRUD on PHP</a></li>
+		        </ul>
+		      </li>
+
+		      <li class="nav-item">
+		        <a class="nav-link" href="#"> </a>
+		      </li>
+		      <li>
+		      	
+		      </li>
+
+
+		    </ul>
+		  </div>
+	  </div>
+	</nav>
+	<!-- left panel -->
+	<div class="container navbar-expand-lg text-center">
+  <div class="row mt-5">
+    <div class="col">
+      <div class="container">
+				<div class="box">
+				<h4 class="display text-center">Dashboard</h4><br>
+		    
+		    
+			<table class="table table-striped" id="dashboard_table">
+			  <thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Score</th>
+			      
+			    </tr>
+			  </thead>
+			  <tbody id="insertTable">
+			  	
+			    <!-- <tr>
+			      <th scope="row"></th>
+			      <td></td>
+			      <td></td>
+			    </tr> -->
+			  </tbody>
+			</table>
+		</div>
+	</div>
+    </div>
+    <div class="col">
+      <div class="wrap" id="restart">
+		<div class="cell" data-num="0"></div>
+		<div class="cell" data-num="1"></div>
+		<div class="cell" data-num="2"></div>
+		<br>
+		<div class="cell" data-num="3"></div>
+		<div class="cell" data-num="4"></div>
+		<div class="cell" data-num="5"></div>
+		<br>
+		<div class="cell" data-num="6"></div>
+		<div class="cell" data-num="7"></div>
+		<div class="cell" data-num="8"></div>
+	</div>
+    </div>
+    <div class="col">
+		<div class="box">
+			<h4 class="display text-center">User statistic</h4><br>
+		    
+		    
+			<table class="table table-striped" id="dashboard_table2">
+			  <thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Name</th>
+			      <th scope="col">Games</th>
+			      <th scope="col">Wins</th>
+			      <th scope="col">Draws</th>
+			      <th scope="col">Loses</th>
+			      <th scope="col">Lewel</th>
+			      
+			    </tr>
+			  </thead>
+			  <tbody id="insertTable2">
+			  	
+			    <!-- <tr>
+			      <th scope="row"></th>
+			      <td></td>
+			      <td></td>
+			    </tr> -->
+			  </tbody>
+			</table>
+		</div>
+    </div>
+  </div>
+</div>
+	
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Enter you username</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="handle_form.php" method="POST" id="example_form">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Username</label>
+                  <input type="text" class="form-control" name="username" id="recipient-name" placeholder="Enter your nickname">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Play</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script src="main.js"></script>
 </body>
 </html>

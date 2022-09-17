@@ -1,0 +1,142 @@
+
+
+body {
+    font-family: "Barlow", sans-serif;
+    font-size: 1.2em;
+    line-height: 1.7;
+    color: #516171;
+
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-weight:  700 !important;
+    color: #092032;
+}
+
+a {
+    color: #0dcaf0;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    font-weight: 500;
+
+}
+
+img {
+    width: 100%;
+}
+
+p {
+    margin-bottom: 0;
+    display: inline-block;
+    margin-right: 16px;
+
+}
+.top-nav {
+    background-color:   #000000  ;
+}
+
+.social-links a{
+    width: 37px;
+    height: 37px;
+    background-color:  #212f3c   ;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 100%;
+
+}
+
+.social-links a:hover {
+    background-color: #ffffff;
+    color:  #839192 
+}
+
+.navbar {
+    background-color: #17202a   ;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.nav-link:hover {
+    color:  #e74c3c !important;
+    /*background-color:   #c0392b*/  ;
+}
+
+/*botton*/
+
+.btn {
+    padding: 10px 14px;
+    font-weight: 900;
+
+}
+
+.btn:hover {
+    color:  #a6acaf ;
+    background-color:  #e74c3c  ;
+    border-color:  #e74c3c ;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    outline: none;
+}
+
+/*new */
+.container form {
+    width: 50px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.box {
+    width: 50px;
+}
+.container table {
+    padding: 240px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.link-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wrap{
+    line-height: 0px;
+}
+
+.cell{
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    display: table-cell;
+    background-color: rgb(180, 180, 180);
+    font: bold 60px comic sans ms;
+    text-align: center;
+    color: green;
+}
+
+/*.show-modal{
+    color: #fff !important;
+    background: linear-gradient(to right, #33a3ff, #0675cf, #49a6fd);
+    font-size: 18px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 10px 15px;
+    margin: 200px auto 0;
+    border: none;
+    outline: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: block;
+    transition: all 0.3s ease 0s;
+}
+.show-modal:hover,
+.show-modal:focus{
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    outline: none;
+}
+/*popup*/
