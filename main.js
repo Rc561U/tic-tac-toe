@@ -1,10 +1,175 @@
+
+// Create new username 
+const form = document.getElementById('example_form');
+
+function doing(){
+	form.addEventListener('submit', function(e) {
+    // Prevent default behavior:
+	    e.preventDefault();
+	    // Create payload as new FormData object:
+	    const payload = new FormData(form);
+	    fetch('php/insert_db.php', {
+		    method: 'POST',
+		    body: payload,
+		    })
+	    .then(res => res.text())
+	    .then(data => console.log(data))
+
+	    update()
+		updateLeftPanel()
+	    
+	})
+}
+
+
+
+
+// const userName = fetch('php/take_score.php')
+//   .then((response) => response.json())
+//   .then((user) => {
+//     return user.name;
+//   });
+
+// const printUserName = async () => {
+//   const a = await userName;
+//   console.log(a);
+// };
+
+
+// printUserName();
+// let datasas = printUserName();
+
+
+
+
+
+
+
+
+
+
+
+function update(){
+	fetch('php/select_all_db.php', {
+		method : 'GET'
+	})
+	.then(response => response.json())
+	.then(result => {
+		let element = document.getElementById("insertTable");
+		while (element.firstChild) {
+		  element.removeChild(element.firstChild);
+		}
+
+		var table = document.getElementById("dashboard_table");
+		const tbodyEl = document.getElementById("insertTable");
+
+		for (var i = 0; i < 10; i++) {
+		    
+		    let row  = document.createElement("tr")
+
+
+		    row.innerHTML += `
+		                <tr id="rem">
+		                    <th scope="row">${i+1}</th>
+		                    <td>${result[i]['name']}</td>
+		                    <td>${result[i]['score']}</td>
+		                    
+		                </tr>
+		            `;
+		    document.getElementById('insertTable').appendChild(row)
+		}
+		//
+		
+		
+	})
+}
+
+
+
+
+// var sendUsernameToBackend = function(){
+// 	form.addEventListener('submit', function(e) {
+//     // Prevent default behavior:
+// 	    e.preventDefault();
+// 	    // Create payload as new FormData object:
+// 	    const payload = new FormData(form);
+// 	    // Post the payload using Fetch:
+// 	    fetch('php/insert_db.php', {
+// 		    method: 'POST',
+// 		    body: payload,
+// 		    })
+// 	    .then(res => res.text())
+// 	    .then(data => console.log(data))
+// 	})
+// }
+
+
+
+
+
+
+function updateLeftPanel(){
+	fetch('php/score_getter.php', {
+		method : 'GET',
+		// body: JSON.stringify({'username' : datasas}),
+
+	})
+	.then(response => response.json())
+	.then(result => {
+		
+		let element = document.getElementById("insertTable2");
+		while (element.firstChild) {
+		  element.removeChild(element.firstChild);
+		}
+
+		var table = document.getElementById("dashboard_table2");
+		const tbodyEl = document.getElementById("insertTable2");
+
+		for (var i = 0; i < 1; i++) {
+		    
+		    let row  = document.createElement("tr")
+
+
+		    row.innerHTML += `
+		                <tr id="rem">
+		                    <th scope="row">${i+1}</th>
+		                    <td>${result['name']}</td>
+		                    <td>${result['games']}</td>
+		                    <td>${result['wins']}</td>
+		                    <td>${result['draw']}</td>
+		                    <td>${result['loses']}</td>
+		                    <td>${result['score']}</td>
+		                    
+		                </tr>
+		            `;
+		    document.getElementById('insertTable2').appendChild(row)
+		}
+		
+		
+		
+	})
+}
+update()
+updateLeftPanel()
+doing()
+
+// tictac
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+} 
+
+
 var stop = false
 
 var arrData = document.querySelectorAll("[data-num]")
 var url = 'bot.php';
 // var arr = [null, null, null, null, null, null, null, null, null]
-let arr = ['null', 'null','null','null','null','null','null','null','null']
-let data = {'data' : arr}
+var arr = ['null', 'null','null','null','null','null','null','null','null']
+var data = {'data' : arr}
 var concat = function(a, b, c){
 	var result = arr[a] + arr[b] + arr[c] 
 	
@@ -41,12 +206,48 @@ var changeColorAndStop = function(a, b, c){
 	stop = true
 }
 
+
+function sendScoreToBackend(win,lose){
+	fetch('php/take_score.php', {
+		method : 'POST',
+		body: JSON.stringify({'wins' : win, 'lose' : lose}),
+		headers : { 'Content-type' : 'application/json;charset=utf-8'}
+	})
+	.then(response => response.json())
+	.then(result => {console.log('mya')
+		
+		
+	})
+}
+
+$(document).ready(function () {
+    $("#restartGame").click(function () {
+        location.reload(true);
+    });
+});
+
+
+
+// send score
+function getAlert(combo){
+	if (combo === 'xxx') {
+		alert("You win!");
+		sendScoreToBackend(1,0);
+		location.reload(true);
+	}else if ( combo === 'ooo'){
+		alert("You lose")
+		sendScoreToBackend(0,1);
+		location.reload(true);
+	}
+}
+
 var checkWin = function(){
 	for (var i = 0; i < 3; i++){
 		var result = concat(i, i + 3, i + 6)
 		
 		if (result === "xxx" || result === "ooo"){
 			changeColorAndStop(i, i + 3, i + 6)
+			getAlert(result)
 		}
 	}
 	
@@ -55,19 +256,44 @@ var checkWin = function(){
 		
 		if (result === "xxx" || result === "ooo"){
 			changeColorAndStop(i, i + 1, i + 2)
+			getAlert(result)
 		}
 	}
 	
 	result = concat(0, 4, 8)
 	if (result === "xxx" || result === "ooo"){
 		changeColorAndStop(0, 4, 8)
+		getAlert(result)
 	}
 	
 	result = concat(2, 4, 6)
 	if (result === "xxx" || result === "ooo"){
 		changeColorAndStop(2, 4, 6)
+		getAlert(result)
 	}	
+	
 }
+
+// function removeAllElent() {
+// 	const changeText = (e) => {
+// 	  $('#restart div').each(function(){
+// 	    $(this).text($(this).text().replace("x", ""));
+// 	    $(this).text($(this).text().replace("o", ""));
+// 	  }); 
+// 	}
+// 	$(document).on('click', '#restartGame', changeText);
+// 	stop = false
+// 	arr = ['null', 'null','null','null','null','null','null','null','null']
+// }
+$(document).ready(function () {
+            $("#restartGame").click(function () {
+                location.reload(true);
+                alert('Reloading Page');
+            });
+        });
+
+
+
 
 addEventListener("click", function(event){
 	if (stop === true){return}
@@ -83,8 +309,7 @@ addEventListener("click", function(event){
 	}else{
 		return
 	}
-
-	fetch(url, {
+	fetch('bot.php', {
 		method : 'POST',
 		body: JSON.stringify({'jsonData' : data}),
 		headers : { 'Content-type' : 'application/json;charset=utf-8'}
@@ -95,13 +320,15 @@ addEventListener("click", function(event){
 		arrData[result].innerHTML = "o"
 		arr[result] = "o"
 		checkWin()
+		if (stop === true){return}
+		
 	})
-	//.catch(err=>console.error(err));
-
 	checkWin()
+
+
 	
-	if (stop === true){return}
-
-	checkWin()
 	
 })
+
+
+
