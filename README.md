@@ -14,4 +14,16 @@ Additional functionality.
 - JavaScript
 - Bootstrap
 - JQuery
-## Screnshots
+## Screenshots
+
+<img
+src="assets/Screenshot 2022-09-18 11.52.55.png"
+alt="Alt text"
+title="Optional title"
+style="display: inline-block; margin: 0 auto; max-width: 300px">
+<br>
+<img
+src="assets/Screenshot 2022-09-18 11.56.35.png"
+alt="Alt text"
+title="Optional title"
+style="display: inline-block; margin: 0 auto; max-width: 300px">
