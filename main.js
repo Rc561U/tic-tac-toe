@@ -5,48 +5,32 @@ const form = document.getElementById('example_form');
 function doing(){
 	form.addEventListener('submit', function(e) {
     // Prevent default behavior:
-	    e.preventDefault();
-	    // Create payload as new FormData object:
-	    const payload = new FormData(form);
-	    fetch('php/insert_db.php', {
-		    method: 'POST',
-		    body: payload,
-		    })
-	    .then(res => res.text())
-	    .then(data => console.log(data))
+		e.preventDefault();
+		// Create payload as new FormData object:
+		const payload = new FormData(form);
+		fetch('php/insert_db.php', {
+			method: 'POST',
+			body: payload,
+			})
+		.then(res => res.json())
+		.then(data => {
+			var errore = document.getElementById('error')
+			if (data.status === 'true') {
+							errore.innerHTML= `<div class="alert alert-success" role="alert">
+				  													${data.response}
+																</div>`
+			}else{errore.innerHTML= `<div class="alert alert-danger" role="alert">
+																  ${data.response}
+																</div>`
+															}
+			
+			console.log(data)});
 
-	    update()
-		updateLeftPanel()
+		update()
+	updateLeftPanel()
 	    
 	})
 }
-
-
-
-
-// const userName = fetch('php/take_score.php')
-//   .then((response) => response.json())
-//   .then((user) => {
-//     return user.name;
-//   });
-
-// const printUserName = async () => {
-//   const a = await userName;
-//   console.log(a);
-// };
-
-
-// printUserName();
-// let datasas = printUserName();
-
-
-
-
-
-
-
-
-
 
 
 function update(){
@@ -83,29 +67,6 @@ function update(){
 		
 	})
 }
-
-
-
-
-// var sendUsernameToBackend = function(){
-// 	form.addEventListener('submit', function(e) {
-//     // Prevent default behavior:
-// 	    e.preventDefault();
-// 	    // Create payload as new FormData object:
-// 	    const payload = new FormData(form);
-// 	    // Post the payload using Fetch:
-// 	    fetch('php/insert_db.php', {
-// 		    method: 'POST',
-// 		    body: payload,
-// 		    })
-// 	    .then(res => res.text())
-// 	    .then(data => console.log(data))
-// 	})
-// }
-
-
-
-
 
 
 function updateLeftPanel(){
@@ -153,6 +114,55 @@ update()
 updateLeftPanel()
 doing()
 
+async function sendScoreToBackend(win,lose) {
+  const object = { 'wins': win, 'lose' : lose };
+  //console.log(object)
+  const response = await fetch('php/take_score.php', {
+    method: 'POST',
+    body: JSON.stringify(object),
+    headers: {
+      'Content-Type': 'application/json'
+  	}
+  });
+  const responseText = await response.text();
+  //console.log(responseText); // logs 'OK'
+}
+
+
+
+$(document).ready(function () {
+    $("#restartGame").click(function () {
+        location.reload(true);
+    });
+});
+
+
+function getAlert(combo){
+	var gameResult = document.getElementById('gameResult')
+	if (combo === 'xxx') {
+		
+		gameResult.innerHTML = `<div class="alert alert-info" role="alert">
+  														You Win! +1 score
+														</div>`
+		sendScoreToBackend(1,0);
+		
+		// location.reload(true);
+	}else if ( combo === 'ooo'){
+		gameResult.innerHTML = `<div class="alert alert-warning" role="alert">
+  														You Lose =( -1 score
+														</div>`
+		sendScoreToBackend(0,1);
+		// console.log("From getAlert 0, 1")
+		// location.reload(true);
+	}else {
+		gameResult.innerHTML = `<div class="alert alert-secondary" role="alert">
+  														Draw
+														</div>`
+		sendScoreToBackend(0,0);
+	}
+}
+
+
 // tictac
 function openForm() {
   document.getElementById("myForm").style.display = "block";
@@ -169,7 +179,7 @@ var arrData = document.querySelectorAll("[data-num]")
 var url = 'bot.php';
 // var arr = [null, null, null, null, null, null, null, null, null]
 var arr = ['null', 'null','null','null','null','null','null','null','null']
-var data = {'data' : arr}
+let data = {'data' : arr}
 var concat = function(a, b, c){
 	var result = arr[a] + arr[b] + arr[c] 
 	
@@ -207,39 +217,10 @@ var changeColorAndStop = function(a, b, c){
 }
 
 
-function sendScoreToBackend(win,lose){
-	fetch('php/take_score.php', {
-		method : 'POST',
-		body: JSON.stringify({'wins' : win, 'lose' : lose}),
-		headers : { 'Content-type' : 'application/json;charset=utf-8'}
-	})
-	.then(response => response.json())
-	.then(result => {console.log('mya')
-		
-		
-	})
-}
-
-$(document).ready(function () {
-    $("#restartGame").click(function () {
-        location.reload(true);
-    });
-});
 
 
 
-// send score
-function getAlert(combo){
-	if (combo === 'xxx') {
-		alert("You win!");
-		sendScoreToBackend(1,0);
-		location.reload(true);
-	}else if ( combo === 'ooo'){
-		alert("You lose")
-		sendScoreToBackend(0,1);
-		location.reload(true);
-	}
-}
+
 
 var checkWin = function(){
 	for (var i = 0; i < 3; i++){
@@ -271,27 +252,10 @@ var checkWin = function(){
 		changeColorAndStop(2, 4, 6)
 		getAlert(result)
 	}	
+
+
 	
 }
-
-// function removeAllElent() {
-// 	const changeText = (e) => {
-// 	  $('#restart div').each(function(){
-// 	    $(this).text($(this).text().replace("x", ""));
-// 	    $(this).text($(this).text().replace("o", ""));
-// 	  }); 
-// 	}
-// 	$(document).on('click', '#restartGame', changeText);
-// 	stop = false
-// 	arr = ['null', 'null','null','null','null','null','null','null','null']
-// }
-$(document).ready(function () {
-            $("#restartGame").click(function () {
-                location.reload(true);
-                alert('Reloading Page');
-            });
-        });
-
 
 
 
@@ -309,24 +273,36 @@ addEventListener("click", function(event){
 	}else{
 		return
 	}
-	fetch('bot.php', {
+	checkWin()
+	
+	if (stop === true){return}
+
+
+	fetch(url, {
 		method : 'POST',
 		body: JSON.stringify({'jsonData' : data}),
 		headers : { 'Content-type' : 'application/json;charset=utf-8'}
 	})
 	.then(response => response.text())
 	.then(result => {
-		console.log(result)
+		
+		
 		arrData[result].innerHTML = "o"
 		arr[result] = "o"
 		checkWin()
-		if (stop === true){return}
+		console.log(arr.filter(x => x== 'null').length)
+		
+		if (arr.filter(x => x== 'null').length == '1'){
+			getAlert('draw')
+			
+		}
+		
+		if (stop === true){
+
+			return}
 		
 	})
-	checkWin()
 
-
-	
 	
 })
 

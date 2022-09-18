@@ -1,13 +1,5 @@
 <?php
-// $arr = array('o', 'null','null',
-//              'null','null','x',
-//              'null','null','null');
 
-//$arr = $_POST['array'];
-// for ($i = 0; $i <= 6; $i+=3){
-//     echo $arr[$i]." ".$arr[$i+1]." ".$arr[$i+2];
-//     echo "<br>";
-// }
 $post = json_decode(file_get_contents('php://input'), true);
 $jsonData = $post['jsonData'];
 
@@ -25,7 +17,6 @@ function getRandomBotChoice(){
     return $randomArrayValue;
     
 }   
-// echo $arr[getRandomBotChoice()].' '.getRandomBotChoice();
 
 function concat($a,$b,$c){
     global $arr;
@@ -56,17 +47,11 @@ function concat($a,$b,$c){
     }
     return 'Nothing'; 
 }
-//echo "<br>";
-// echo concat(0,1,2)[1];
-// echo "<br>";
+
 
 function getBotSelect(){
     global $arr;
-    //проверка комбинаций из двух "xx"
-    //vertival check
-    
-    //проверка комбинаций из двух "oo"
-    //vertival check
+
     for ($i = 0; $i < 3; $i++){
         $result = concat($i, $i + 3, $i + 6);
         
@@ -76,7 +61,7 @@ function getBotSelect(){
         }
     }
 
-    //horizontal check
+
     for ($i = 0; $i <= 6; $i +=3){
             $result = concat($i, $i + 1, $i + 2);
         
@@ -135,12 +120,6 @@ function getBotSelect(){
 
 }
 
-// echo getBotSelect();
-// for ($i = 0; $i <= 6; $i+=3){
-//     echo "<br>";
-//     echo $arr[$i]." ".$arr[$i+1]." ".$arr[$i+2];
-    
-// }
 
 $resultatus = getBotSelect();
 

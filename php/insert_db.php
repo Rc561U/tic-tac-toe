@@ -5,6 +5,8 @@ include 'db_connect.php';
 
 $name = $_POST['username'];
 
+$response = array('status' => '', 'response' => '');
+
 if (isset($name) && strlen($name) > 0){
 	try {
 		// create sissin 
@@ -12,17 +14,28 @@ if (isset($name) && strlen($name) > 0){
 		// session_regenerate_id();
 		$_SESSION["username"] = $name;
 
-		echo ($_SESSION["username"]);
+		
+
 		$sql = "INSERT INTO dashboard (username) VALUES(?)";
+
 		$stmt= $conn->prepare($sql);
 		$stmt->bind_param("s", $name);
 		$stmt->execute();
-		// echo $name .' successfully insert';
+		$conn->close();
+		$response['status'] = 'true';
+		$response['response'] = 'New username was created successfully!';
+		echo json_encode($response);
 	}
 	 catch(Exception $e) {
-		// echo 'This name already exist!';
+	 	$response['status'] = 'false';
+		$response['response'] = 'This username already exist!';
+		echo json_encode($response);
+		
 	}
 	
 }else{
-	// echo "No data to insert";
+ 	$response['status'] = 'false';
+	$response['response'] = 'Username is required!';
+	echo json_encode($response);
+	
 }

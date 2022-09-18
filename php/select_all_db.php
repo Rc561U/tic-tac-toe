@@ -9,7 +9,7 @@
 	if ($result->num_rows > 0) {
 	  
 	  while($row = $result->fetch_assoc()) {
-	    // echo "id" . $row["id"]. " - Name: " . $row["username"]. "<br>";
+	    
 	    $array = array(
 	        "id" => $row["id"],
 	        "name" => $row["username"],
@@ -17,7 +17,7 @@
 	        "wins" => $row["wins"],
 	        "draw" => $row["draw"],
 	        "loses" => $row["loses"],
-	        "score" => $row["score"],
+	        "score" => $row["score"] === null ? 0 : $row["score"]
 	    );
 	    array_push($arr, $array);
 	    
