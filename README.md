@@ -7,7 +7,7 @@ Additional functionality.
 - The system of working sessions with the registration of a new user.
 - Implemented calculation of the player's level with the display of his current statistics
 
-[Onlie demo version](http://tic-tac-toe-trainee.epizy.com/)
+[Online demo version](http://tic-tac-toe-trainee.epizy.com/)
 
 ## Technologies used
 - PHP
